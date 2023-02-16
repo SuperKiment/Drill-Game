@@ -26,7 +26,7 @@ public class Collectable extends Entity {
   protected void Constructor() {
     super.Constructor();
     isCollectable = true;
-    taille.set(100, 100);
+    taille.set(50, 50);
     type = CollectableType.Pierre;
   }
 

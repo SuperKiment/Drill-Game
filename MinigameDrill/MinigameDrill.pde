@@ -1,4 +1,3 @@
-ArrayList<Entity> AllEntities;
 ParticlesManager miningParticles;
 ParticlesManager finishMiningParticles;
 
@@ -18,16 +17,18 @@ void setup() {
 
   camera = new Camera();
 
-  AllEntities = new ArrayList<Entity>();
-  AllEntities.add(new Player());
+  Entity.AllEntities = new ArrayList<Entity>();
+  Entity.AllEntities.add(new Player());
 
-  ui = new UI((Player)AllEntities.get(0));
+  ui = new UI((Player)Entity.AllEntities.get(0));
 
-  AllEntities.add(new Collectable(500, 100, CollectableType.Bois));
-  AllEntities.add(new Collectable(500, 250, CollectableType.Pierre));
-  AllEntities.add(new Collectable(700, 250, CollectableType.Pierre));
-  AllEntities.add(new Collectable(500, 700, CollectableType.Pierre));
-  AllEntities.add(new Collectable(200, 800, CollectableType.Pierre));
+  Entity.AllEntities.add(new Collectable(500, 100, CollectableType.Bois));
+  Entity.AllEntities.add(new Collectable(500, 250, CollectableType.Pierre));
+  Entity.AllEntities.add(new Collectable(700, 250, CollectableType.Pierre));
+  Entity.AllEntities.add(new Collectable(500, 700, CollectableType.Pierre));
+  Entity.AllEntities.add(new Collectable(200, 800, CollectableType.Pierre));
+  
+  Entity.AllEntities.add(new Enemy(new PVector(100, 500)));
 
   rectMode(CENTER);
   textAlign(CENTER, CENTER);
@@ -41,9 +42,9 @@ void draw() {
   camera.Update();
   camera.Translate();
 
-  EntityUpdate();
+  Entity.EntityUpdate();
 
-  EntityDisplay();
+  Entity.EntityDisplay();
 
   miningParticles.Display();
 

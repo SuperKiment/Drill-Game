@@ -3,6 +3,8 @@ import processing.net.*;
 ParticlesManager miningParticles;
 ParticlesManager finishMiningParticles;
 
+PlayState playState = PlayState.Title;
+
 ServerManager serverManager;
 
 void setup() {
@@ -55,17 +57,18 @@ void draw() {
 
   if (serverManager != null) serverManager.Update();
 
-  camera.Update();
-  camera.Translate();
+  if (playState == PlayState.Play) {
+    camera.Update();
+    camera.Translate();
 
-  //Update et Display et toutes les entités
-  Entity.EntityUpdate();
-  Entity.EntityDisplay();
+    //Update et Display et toutes les entités
+    Entity.EntityUpdate();
+    Entity.EntityDisplay();
 
-  //Update et Display et toutes les particules
-  miningParticles.Display();
-  finishMiningParticles.Display();
-
+    //Update et Display et toutes les particules
+    miningParticles.Display();
+    finishMiningParticles.Display();
+  }
   ui.Display();
 }
 

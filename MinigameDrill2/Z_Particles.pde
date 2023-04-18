@@ -1,5 +1,7 @@
 class ParticlesManager {
 
+
+
   private boolean stroke = false;
   private color col = color(255, 255, 255);
   private float
@@ -31,12 +33,10 @@ class ParticlesManager {
     pop();
   }
 
-  //Ajoute un paquet de particules (inutilisé) custom
   public void addParticles(int puissance, PVector p) {
     AllParticles.add(new Particles(puissance, p));
   }
 
-  //Ajoute un paquet de particules aux coord
   public void addParticles(PVector p) {
     /*
     Type de forme
@@ -92,7 +92,6 @@ class ParticlesManager {
   }
   //============================================================
 
-  //Paquet de particules
   private class Particles {
     private ArrayList<Particle> AllParticles;
     private PVector pos;
@@ -189,7 +188,6 @@ class ParticlesManager {
 
     //============================================================
 
-    //Une particule
     private class Particle {
 
       private ParticleType type;

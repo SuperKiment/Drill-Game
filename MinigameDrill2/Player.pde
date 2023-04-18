@@ -1,33 +1,23 @@
 class Player extends Entity {
-  private boolean isMoving = false, collecting = false, controllable = true, loaded = false;
+  private boolean isMoving = false, collecting = false;
 
   private HashMap<String, Float> Stock;
 
   private Collectable collectable = null;
 
-
   public Player() {
     Constructor();
-    controllable = true;
-  }
-
-  public Player(String id) {
-    Constructor();
-    controllable = false;
-    ID = id;
+    speed = 3;
+    isPlayer = true;
   }
 
   protected void Constructor() {
     super.Constructor();
 
-    //Initialise tous les types de collectables dans les keys
     Stock = new HashMap<String, Float>();
     for (int i=0; i<CollectableType.values().length; i++) {
       Stock.put(CollectableType.values()[i].toString(), 0f);
     }
-
-    isPlayer = true;
-    speed = 3;
   }
 
   public void Display() {
@@ -45,38 +35,29 @@ class Player extends Entity {
   public void Update() {
     Direction();
     Deplacement();
-
-    if (controllable) {
-      if (collect) collecting = Collect();
-      else collectable = null;
-    } else {
-      //Se déplalcer grace au dataIn du serv ?
-    }
+    if (collect) collecting = Collect();
+    else collectable = null;
   }
 
-  //Définit la direction du player
   private void Direction() {
-    if (controllable) {
-      isMoving = false;
-      if (up || right || left || down) {
+    isMoving = false;
+    if (up || right || left || down) {
 
-        isMoving = true;
+      isMoving = true;
 
-        if (up) dir.y -= 1;
-        if (down) dir.y += 1;
-        if (left) dir.x -= 1;
-        if (right) dir.x += 1;
-      }
+      if (up) dir.y -= 1;
+      if (down) dir.y += 1;
+      if (left) dir.x -= 1;
+      if (right) dir.x += 1;
+    }
 
-      if (collecting && collectable != null) {
-        DoCollect();
-      }
+    if (collecting && collectable != null) {
+      DoCollect();
     }
 
     dir.setMag(speed);
   }
 
-  //Fait se déplacer
   private void Deplacement() {
     if (isMoving || collecting) pos.add(dir);
   }
@@ -97,7 +78,6 @@ class Player extends Entity {
     return false;
   }
 
-  //Faire la collection du collectable
   private void DoCollect() {
     dir = PVector.sub(collectable.pos.copy(), pos.copy());
     camera.Shake(1);
@@ -107,22 +87,7 @@ class Player extends Entity {
     collectable.Collected();
   }
 
-  //Ajouter du collectable au hashmap
   private void addStock(String type, float amount) {
     Stock.put(type, Stock.get(type) + amount);
-  }
-
-  public void loadData(HashMap<String, String> dataPlayer) {
-    if (!loaded) {
-      if (dataPlayer.containsKey("posX")) pos.set(float(dataPlayer.get("posX")), float(dataPlayer.get("posY")));
-      loaded = true;
-    }
-    if (dataPlayer.containsKey("dirX")) dir.set(float(dataPlayer.get("dirX")), float(dataPlayer.get("dirY")));
-    if (dataPlayer.containsKey("tailleX")) taille.set(float(dataPlayer.get("tailleX")), float(dataPlayer.get("tailleY")));
-    if (dataPlayer.containsKey("ID")) ID = dataPlayer.get("ID");
-    if (dataPlayer.containsKey("isMoving")) {
-      isMoving = StringToBoolean(dataPlayer.get("isMoving"));
-      println(dir);
-    }
   }
 }

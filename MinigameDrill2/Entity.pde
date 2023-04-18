@@ -1,4 +1,4 @@
-enum EntityType { //<>// //<>//
+enum EntityType {
   Collectable, Mob, Interactable, Player
 }
 
@@ -7,15 +7,12 @@ enum EntityType { //<>// //<>//
 static class Entity {
 
   static ArrayList<Entity> AllEntities;
-  static MinigameDrill minigameDrill;
 
   protected BarreHP barreHP;
 
   protected PVector pos, taille, dir;
   protected boolean mort = false;
   protected float speed = 1, HP = 100, baseHP = 100, collectMinTaille = 20;
-
-  public String ID = "";
 
   public boolean
     isCollectable = false,
@@ -26,7 +23,6 @@ static class Entity {
     Constructor();
   }
 
-  //Constructor de base
   protected void Constructor() {
     pos = new PVector(200, 200);
     taille = new PVector(10, 10);
@@ -40,7 +36,6 @@ static class Entity {
   public void Display() {
   }
 
-  //Retourne une entité en cas d'interaction avec une entité
   public Entity Interact(ArrayList<Entity> array) {
     PVector testPos = pos.copy();
     PVector testDir = dir.copy();
@@ -52,7 +47,6 @@ static class Entity {
     return e;
   }
 
-  //Appelé quand le collectable est en train de se faire collecter
   protected void Collected() {
     taille.sub(new PVector(1, 1));
     if (taille.x < collectMinTaille || taille.y < collectMinTaille) setMort();
@@ -62,17 +56,9 @@ static class Entity {
     mort = true;
   }
 
-  protected void loadData(HashMap<String, String> dataPlayer) {
-    if (dataPlayer.containsKey("posX")) pos.set(float(dataPlayer.get("posX")), float(dataPlayer.get("posY")));
-    if (dataPlayer.containsKey("dirX")) dir.set(float(dataPlayer.get("dirX")), float(dataPlayer.get("dirY")));
-    if (dataPlayer.containsKey("tailleX")) taille.set(float(dataPlayer.get("tailleX")), float(dataPlayer.get("tailleY")));
-    if (dataPlayer.containsKey("ID")) ID = dataPlayer.get("ID");
-  }
-
   //========================================STATIC
 
-  //Update toutes les entités
-  public static void EntityUpdate() {
+  static void EntityUpdate() {
     for (int i=0; i<AllEntities.size(); i++) {
       Entity e = AllEntities.get(i);
 
@@ -86,8 +72,7 @@ static class Entity {
     }
   }
 
-  //Affiche toutes les entités
-  public static void EntityDisplay() {
+  static void EntityDisplay() {
     for (int i=0; i<AllEntities.size(); i++) {
       Entity e = AllEntities.get(i);
 
@@ -95,8 +80,7 @@ static class Entity {
     }
   }
 
-  //Teste les collisions avec d'autres entités
-  public static void CollisionEntity(ArrayList<Entity> array, Entity me) {
+  static void CollisionEntity(ArrayList<Entity> array, Entity me) {
     try {
       for (Entity e : array) {
 
@@ -131,7 +115,7 @@ static class Entity {
 
 
   //Vérifie s'il y a collision
-  private static boolean CollisionOk(Entity me, Entity e) {
+  static boolean CollisionOk(Entity me, Entity e) {
     if (me.pos.x - me.taille.x/2 < e.pos.x + e.taille.x/2 && me.pos.x + me.taille.x/2 > e.pos.x - e.taille.x/2 &&
       me.pos.y - me.taille.y/2 < e.pos.y + e.taille.y/2 && me.pos.y + me.taille.y/2 > e.pos.y - e.taille.y/2) {
       return true;
@@ -139,8 +123,8 @@ static class Entity {
     return false;
   }
 
-  private static PVector DirectionCollision(Entity me, Entity e) {
-    PVector dir = PVector.sub(me.pos, e.pos);
+  static PVector DirectionCollision(Entity me, Entity e) {
+    PVector dir = PVector.sub(me.pos.copy(), e.pos.copy());
 
     if (abs(dir.x) > abs(dir.y)) {
       dir.set(dir.x, 0);
@@ -152,41 +136,13 @@ static class Entity {
 
     return dir;
   }
-
-  public static void AddEntityFromServer(HashMap<String, String> hash) {
-    //Si il y a une class spécifiée dans le hash
-    if (hash.containsKey("class")) {
-      switch(hash.get("class")) {
-      case "Collectable":
-        //Nouveau collectable qu'on ajoute
-        Collectable c = minigameDrill.new Collectable();
-        c.loadData(hash);
-        c.type = CollectableType.valueOf(hash.get("type"));
-        println(AllEntities.size());
-        AllEntities.add(c);
-        break;
-      case "Player":
-        //Nouveau Player
-        Player p = minigameDrill.new Player(hash.get("ID"));
-        p.loadData(hash);
-        AllEntities.add(p);
-        break;
-
-      default:
-        println("Pas de classe trouvée pour :", hash);
-        break;
-      }
-    } else {
-      println("Pas de spécification de classe : "+hash);
-    }
-  }
 }
 
 //======================================================
 
-public class BarreHP {
+class BarreHP {
 
-  private float HP, baseHP;
+  float HP, baseHP;
 
   BarreHP(float bhp) {
     baseHP = bhp;

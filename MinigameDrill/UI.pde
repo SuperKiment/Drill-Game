@@ -71,6 +71,15 @@ public class UI {
   }
 
   public void SetAllBoutons() {
+    //Bouton titre
+    AllBoutons.add(new Bouton(width/2, height/2, 500, 200, "Title", "Play !") {
+      void Action() {
+        playState = PlayState.Play;
+      }
+    }
+    );
+    
+    //Bouton changement server/client
     AllBoutons.add(new Bouton(width/2, height/2, 500, 200, "Title", "Play !") {
       void Action() {
         playState = PlayState.Play;
@@ -83,6 +92,7 @@ public class UI {
 public class Bouton {
   private PVector pos, taille;
   private String route, texte;
+  private boolean clicked = false, lastState = false;
 
   public Bouton(float x, float y, float tx, float ty, String r, String t) {
     pos = new PVector(x, y);
@@ -94,12 +104,15 @@ public class Bouton {
   public void Update() {
     if (mouseX > pos.x-taille.x/2 && mouseX < pos.x+taille.x/2
       &&mouseY > pos.y-taille.y/2 && mouseY < pos.y+taille.y/2) {
+      clicked = false;
       fill(50);
       strokeWeight(3);
       if (mousePressed) {
         fill(100);
-        Action();
+        clicked = true;
       }
+      if (!clicked && lastState) Action();
+      lastState = clicked;
     }
     rect(pos.x, pos.y, taille.x, taille.y);
     fill(255);

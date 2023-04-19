@@ -2,6 +2,7 @@ import processing.net.*;
 
 ParticlesManager miningParticles;
 ParticlesManager finishMiningParticles;
+ParticlesManager mouseParticles;
 
 PlayState playState = PlayState.Title;
 
@@ -9,13 +10,13 @@ ServerManager serverManager;
 
 void setup() {
 
+  fullScreen();
+  //size(1000, 1000);
+  surface.setTitle("Drill MiniGame");
+  surface.setResizable(true);
   Entity.minigameDrill = this;
 
   serverManager = new ServerManager(this, NetType.Client, "127.0.0.1");
-
-  size(1000, 1000);
-  surface.setTitle("Drill MiniGame");
-  surface.setResizable(true);
 
   //Particules de minage
   miningParticles = new ParticlesManager();
@@ -26,6 +27,11 @@ void setup() {
   finishMiningParticles = new ParticlesManager();
   finishMiningParticles.set(ParticleType.Circle, 10, 2, 0.1, 0, 20);
   finishMiningParticles.setColor(color(255));
+
+  //Particules de souris
+  mouseParticles = new ParticlesManager();
+  mouseParticles.set(ParticleType.Circle, 2, 1, 0.1, 5, 1);
+  mouseParticles.setColor(color(255));
 
   camera = new Camera();
 
@@ -55,20 +61,26 @@ void setup() {
 void draw() {
   background(0);
 
-  if (serverManager != null) serverManager.Update();
-
   if (playState == PlayState.Play) {
+
+    if (serverManager != null) serverManager.Update();
+
     camera.Update();
     camera.Translate();
 
     //Update et Display et toutes les entités
     Entity.EntityUpdate();
     Entity.EntityDisplay();
-
-    //Update et Display et toutes les particules
-    miningParticles.Display();
-    finishMiningParticles.Display();
   }
+
+  if (playState == PlayState.Title && mousePressed)
+    mouseParticles.addParticles(50, new PVector(mouseX, mouseY));
+
+  //Update et Display et toutes les particules
+  miningParticles.Display();
+  finishMiningParticles.Display();
+  mouseParticles.Display();
+
   ui.Display();
 }
 
@@ -88,6 +100,9 @@ void keyReleased() {
   if  (key == 's') down = false;
   if  (key == 'd') right = false;
   if  (key == 'e') collect = false;
+}
+
+void mousePressed() {
 }
 
 enum PlayState {

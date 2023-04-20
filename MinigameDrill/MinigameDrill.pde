@@ -10,8 +10,8 @@ ServerManager serverManager;
 
 void setup() {
 
-  fullScreen();
-  //size(1000, 1000);
+  //fullScreen();
+  size(1000, 1000);
   surface.setTitle("Drill MiniGame");
   surface.setResizable(true);
   Entity.minigameDrill = this;
@@ -82,6 +82,8 @@ void draw() {
   mouseParticles.Display();
 
   ui.Display();
+  
+  Entity.PrintArray();
 }
 
 boolean up, down, right, left, collect;

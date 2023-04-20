@@ -60,6 +60,7 @@ class ServerManager {
         if (client.ip() != null) {
           //Récup des données
           String read = client.readString();
+          println(read);
           if (read != null && read != "") {
             DataIn = StringToHashClient(read);
             traiterDonnees();

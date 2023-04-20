@@ -31,8 +31,12 @@ class Player extends Entity {
   }
 
   public void Display() {
+    if (ID.equals("52")) {
+      println(pos);
+    }
     push();
     translate(pos.x, pos.y);
+    text(ID, 0, taille.y*2);
     rotate(dir.heading());
     rect(0, 0, taille.x, taille.y);
     rect(-taille.x/2, 0, taille.x/2, taille.y/2);
@@ -117,7 +121,10 @@ class Player extends Entity {
       if (dataPlayer.containsKey("posX")) pos.set(float(dataPlayer.get("posX")), float(dataPlayer.get("posY")));
       loaded = true;
     }
-    if (dataPlayer.containsKey("dirX")) dir.set(float(dataPlayer.get("dirX")), float(dataPlayer.get("dirY")));
+    if (dataPlayer.containsKey("dirX")) {
+      dir.set(float(dataPlayer.get("dirX")), float(dataPlayer.get("dirY")));
+      dir.setMag(1);
+    }
     if (dataPlayer.containsKey("tailleX")) taille.set(float(dataPlayer.get("tailleX")), float(dataPlayer.get("tailleY")));
     if (dataPlayer.containsKey("ID")) ID = dataPlayer.get("ID");
     if (dataPlayer.containsKey("isMoving")) {

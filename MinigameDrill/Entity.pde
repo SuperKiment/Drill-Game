@@ -28,6 +28,7 @@ static class Entity {
 
   //Constructor de base
   protected void Constructor() {
+    ID = String.valueOf(AllEntities.size());
     pos = new PVector(200, 200);
     taille = new PVector(10, 10);
     dir = new PVector(1, 0);
@@ -178,6 +179,16 @@ static class Entity {
       }
     } else {
       println("Pas de spécification de classe : "+hash);
+    }
+  }
+
+  public static void PrintArray() {
+    println("Entities :");
+    for (Entity e : AllEntities) {
+      print("    ");
+      print("ID:"+e.ID);
+      print(" / Class:"+split(e.getClass().toString(), '$')[1]);
+      println();
     }
   }
 }

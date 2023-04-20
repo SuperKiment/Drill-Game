@@ -73,7 +73,7 @@ public class UI {
   public void SetAllBoutons() {
     //Bouton titre
     AllBoutons.add(new Bouton(width/2, height/2, 500, 200, "Title", "Play !") {
-      void Action() {
+      public void Action() {
         playState = PlayState.Play;
       }
     }
@@ -81,7 +81,7 @@ public class UI {
     
     //Bouton changement server/client
     AllBoutons.add(new Bouton(width/2, height/2, 500, 200, "Title", "Play !") {
-      void Action() {
+      public void Action() {
         playState = PlayState.Play;
       }
     }

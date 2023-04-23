@@ -11,9 +11,9 @@ class Player extends Entity {
     controllable = true;
   }
 
-  public Player(String id) {
+  public Player(String id, boolean c) {
     Constructor();
-    controllable = false;
+    controllable = c;
     ID = id;
   }
 

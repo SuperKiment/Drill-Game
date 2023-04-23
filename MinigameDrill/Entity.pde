@@ -193,7 +193,7 @@ static class Entity {
         break;
       case "Player":
         //Nouveau Player
-        Player p = minigameDrill.new Player(hash.get("ID"));
+        Player p = minigameDrill.new Player(hash.get("ID"), false);
         p.loadData(hash);
         AllEntities.add(p);
         break;
@@ -245,7 +245,7 @@ static class Entity {
     }
     switch(json.getString("class")) {
     case "Player":
-      Player p = minigameDrill.new Player(json.getString("ID"));
+      Player p = minigameDrill.new Player(json.getString("ID"), false);
       AllEntities.add(p);
       break;
     }

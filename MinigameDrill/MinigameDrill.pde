@@ -39,7 +39,7 @@ void setup() {
   //Ajout de player aux entités
   Entity.AllEntities = new ArrayList<Entity>();
   Entity.AllEntities.add(new Player());
-  Entity.AllEntities.add(new Player("5412"));
+  Entity.AllEntities.add(new Player("5412", false));
 
   ui = new UI((Player)Entity.AllEntities.get(0));
 

@@ -20,6 +20,16 @@ static String BooleanToNumString(boolean b) {
   return b ? "1" : "0";
 }
 
+static JSONObject PVectorToJSON(PVector p) {
+  JSONObject json = new JSONObject();
+  json.setFloat("x", p.x);
+  json.setFloat("y", p.y);
+  return json;
+}
+
+public static String getClearClass(Object o) {
+  return split(o.getClass().toString(), "$")[1];
+}
 
 /*
 

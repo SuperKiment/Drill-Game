@@ -9,8 +9,9 @@ class ServerManager {
   private Client client;
   private Server server;
   public NetType type;
+  public int port = 5204;
 
-  String separPlayer = " | ", separData = " / ";
+  private String separPlayer = " | ", separData = " / ";
 
   float timerReconnexion = 0, cooldownReconnexion = 1000;
 
@@ -35,11 +36,11 @@ class ServerManager {
 
     switch (t) {
     case Client:
-      client = new Client(proc, ip, 5204);
+      client = new Client(proc, ip, port);
       client.write(ToWriteClient("ID")+ID);
       break;
     case Server:
-      server = new Server(proc, 5204);
+      server = new Server(proc, port);
       break;
     }
   }
@@ -52,7 +53,7 @@ class ServerManager {
       if (server != null) {
         //Récup et traitement des données
         server.write("ytestetstes salut");
-      }
+      } else server = new Server(minigameDrill, port);
     } else if (type == NetType.Client) {
       //CLIENT
       if (client != null) {
@@ -71,7 +72,7 @@ class ServerManager {
         } else {
           if (millis() - timerReconnexion > cooldownReconnexion) {
             timerReconnexion = millis();
-            client = new Client(minigameDrill, ipClient, 5204);
+            client = new Client(minigameDrill, ipClient, port);
           }
         }
       }
@@ -137,6 +138,14 @@ class ServerManager {
 
   public void AddEnvoi(String envoi) {
     EnvoiBuffer.add(envoi);
+  }
+
+  public void UpdateInstance() {
+    if (type == NetType.Client) {
+      client = new Client(minigameDrill, ipClient, port);
+    } else {
+      server = new Server(minigameDrill, port);
+    }
   }
 }
 

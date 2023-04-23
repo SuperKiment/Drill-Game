@@ -132,4 +132,30 @@ class Player extends Entity {
       println(dir);
     }
   }
+
+
+  public JSONObject getJSON() {
+    JSONObject json = new JSONObject();
+
+    json.setJSONObject("pos", PVectorToJSON(pos));
+    json.setJSONObject("taille", PVectorToJSON(taille));
+    json.setJSONObject("dir", PVectorToJSON(dir));
+    json.setString("class", getClearClass(this));
+    json.setString("ID", ID);
+    json.setJSONObject("Stock", getStockJSON());
+
+    return json;
+  }
+
+  private JSONObject getStockJSON() {
+    JSONObject json = new JSONObject();
+    println();
+    json.setFloat("Bois", Stock.get("Bois"));
+    Stock.keySet().forEach((cle) -> {
+      json.setFloat(cle,Stock.get(cle));
+    }
+    );
+
+    return json;
+  }
 }

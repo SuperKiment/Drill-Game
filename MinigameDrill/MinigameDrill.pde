@@ -7,6 +7,7 @@ ParticlesManager mouseParticles;
 PlayState playState = PlayState.Title;
 
 ServerManager serverManager;
+SaveManager saveManager;
 
 void setup() {
 
@@ -16,7 +17,7 @@ void setup() {
   surface.setResizable(true);
   Entity.minigameDrill = this;
 
-  serverManager = new ServerManager(this, NetType.Client, "127.0.0.1");
+  serverManager = new ServerManager(this, NetType.Server, "127.0.0.1");
 
   //Particules de minage
   miningParticles = new ParticlesManager();
@@ -46,16 +47,21 @@ void setup() {
   Entity.AllEntities.add(new Collectable(500, 100, CollectableType.Bois));
   Entity.AllEntities.add(new Collectable(500, 250, CollectableType.Pierre));
   Entity.AllEntities.add(new Collectable(700, 250, CollectableType.Pierre));
-  Entity.AllEntities.add(new Collectable(500, 700, CollectableType.Pierre));
+  Entity.AllEntities.add(new Collectable(500, 700, CollectableType.Or));
   Entity.AllEntities.add(new Collectable(200, 800, CollectableType.Pierre));
 
   Entity.AllEntities.add(new Enemy(new PVector(100, 500)));
+
+  saveManager = new SaveManager();
 
   //Base styles d'affichage
   rectMode(CENTER);
   textAlign(CENTER, CENTER);
   fill(255);
   noStroke();
+
+  saveManager.Save("map1");
+  saveManager.LoadData("map1");
 }
 
 void draw() {
@@ -82,8 +88,8 @@ void draw() {
   mouseParticles.Display();
 
   ui.Display();
-  
-  Entity.PrintArray();
+
+  //Entity.PrintArray();
 }
 
 boolean up, down, right, left, collect;

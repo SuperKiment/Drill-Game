@@ -1,0 +1,144 @@
+{"Entities": [
+  {
+    "taille": {
+      "x": 10,
+      "y": 10
+    },
+    "pos": {
+      "x": 200,
+      "y": 200
+    },
+    "ID": "0",
+    "dir": {
+      "x": 1,
+      "y": 0
+    },
+    "class": "Player",
+    "Stock": {
+      "Pierre": 0,
+      "Or": 0,
+      "Uranium": 0,
+      "Argent": 0,
+      "Bois": 0
+    }
+  },
+  {
+    "taille": {
+      "x": 10,
+      "y": 10
+    },
+    "pos": {
+      "x": 200,
+      "y": 200
+    },
+    "ID": "5412",
+    "dir": {
+      "x": 1,
+      "y": 0
+    },
+    "class": "Player",
+    "Stock": {
+      "Pierre": 0,
+      "Or": 0,
+      "Uranium": 0,
+      "Argent": 0,
+      "Bois": 0
+    }
+  },
+  {
+    "taille": {
+      "x": 50,
+      "y": 50
+    },
+    "pos": {
+      "x": 500,
+      "y": 100
+    },
+    "ID": "2",
+    "dir": {
+      "x": 1,
+      "y": 0
+    },
+    "class": "Collectable"
+  },
+  {
+    "taille": {
+      "x": 50,
+      "y": 50
+    },
+    "pos": {
+      "x": 500,
+      "y": 250
+    },
+    "ID": "3",
+    "dir": {
+      "x": 1,
+      "y": 0
+    },
+    "class": "Collectable"
+  },
+  {
+    "taille": {
+      "x": 50,
+      "y": 50
+    },
+    "pos": {
+      "x": 700,
+      "y": 250
+    },
+    "ID": "4",
+    "dir": {
+      "x": 1,
+      "y": 0
+    },
+    "class": "Collectable"
+  },
+  {
+    "taille": {
+      "x": 50,
+      "y": 50
+    },
+    "pos": {
+      "x": 500,
+      "y": 700
+    },
+    "ID": "5",
+    "dir": {
+      "x": 1,
+      "y": 0
+    },
+    "class": "Collectable"
+  },
+  {
+    "taille": {
+      "x": 50,
+      "y": 50
+    },
+    "pos": {
+      "x": 200,
+      "y": 800
+    },
+    "ID": "6",
+    "dir": {
+      "x": 1,
+      "y": 0
+    },
+    "class": "Collectable"
+  },
+  {
+    "taille": {
+      "x": 10,
+      "y": 10
+    },
+    "pos": {
+      "x": 100,
+      "y": 500
+    },
+    "ID": "7",
+    "dir": {
+      "x": 1,
+      "y": 0
+    },
+    "class": "Enemy"
+  }
+]}

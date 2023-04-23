@@ -1,4 +1,4 @@
-enum EntityType { //<>// //<>//
+enum EntityType { //<>//
   Collectable, Mob, Interactable, Player
 }
 
@@ -70,7 +70,21 @@ static class Entity {
     if (dataPlayer.containsKey("ID")) ID = dataPlayer.get("ID");
   }
 
+  public JSONObject getJSON() {
+    JSONObject json = new JSONObject();
+
+    json.setJSONObject("pos", PVectorToJSON(pos));
+    json.setJSONObject("taille", PVectorToJSON(taille));
+    json.setJSONObject("dir", PVectorToJSON(dir));
+    json.setString("class", getClearClass(this));
+    json.setString("ID", ID);
+
+    return json;
+  }
+
+  //=====================
   //========================================STATIC
+  //=====================
 
   //Update toutes les entités
   public static void EntityUpdate() {
@@ -189,6 +203,41 @@ static class Entity {
       print("ID:"+e.ID);
       print(" / Class:"+split(e.getClass().toString(), '$')[1]);
       println();
+    }
+  }
+
+  public static JSONArray getAllEntitiesJSON() {
+    JSONArray array = new JSONArray();
+
+    for (int i=0; i<AllEntities.size(); i++) {
+      Entity e = AllEntities.get(i);
+      array.setJSONObject(i, e.getJSON());
+    }
+
+    return array;
+  }
+
+  public static void loadFromJSON(JSONArray json) {
+    AllEntities.clear();
+
+    for (int i=0; i<json.size(); i++) {
+      JSONObject e = json.getJSONObject(i);
+    }
+  }
+
+  public static void add(JSONObject json) {
+    try {
+      //On doit pouvoir récup le nom de la class et de l'instancier ici
+      Class c = Class.forName("Player");
+    }
+    catch (Exception e) {
+      
+    }
+    switch(json.getString("class")) {
+    case "Player":
+      Player p = minigameDrill.new Player(json.getString("ID"));
+      AllEntities.add(p);
+      break;
     }
   }
 }

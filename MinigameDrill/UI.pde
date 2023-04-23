@@ -42,19 +42,24 @@ public class UI {
 
   private void DisplayNet(ServerManager s) {
     push();
-    rectMode(CORNER);
-    fill(255, 255, 255, 50);
-    rect(0, 0, 150, 50);
-    fill(255);
-    textAlign(LEFT);
-    textSize(10);
-    if (s.type == NetType.Server) {
-      text("Server", 20, 20);
-      text("IP : "+Server.ip(), 20, 30);
-      text("Clients connectés : "+s.server.clientCount, 20, 40);
-    } else {
-      text("Client", 20, 20);
-      text("Connecté : "+s.client.ip(), 20, 30);
+    try {
+      rectMode(CORNER);
+      fill(255, 255, 255, 50);
+      rect(0, 0, 150, 50);
+      fill(255);
+      textAlign(LEFT);
+      textSize(10);
+      if (s.type == NetType.Server) {
+        text("Server", 20, 20);
+        text("IP : "+Server.ip(), 20, 30);
+        //text("Clients connectés : "+s.server.clientCount, 20, 40);
+      } else {
+        text("Client", 20, 20);
+        text("Connecté : "+s.client.ip(), 20, 30);
+      }
+    }
+    catch (Exception e) {
+      println("oopsi doopsi");
     }
     pop();
   }
@@ -78,11 +83,18 @@ public class UI {
       }
     }
     );
-    
+
     //Bouton changement server/client
-    AllBoutons.add(new Bouton(width/2, height/2, 500, 200, "Title", "Play !") {
+    AllBoutons.add(new Bouton(width/2, height*3/4, 500, 100, "Title", "Vous êtes : "+serverManager.type.toString()) {
       public void Action() {
-        playState = PlayState.Play;
+        if (serverManager.type == NetType.Server) {
+          serverManager.type = NetType.Client;
+          serverManager.UpdateInstance();
+        } else {
+          serverManager.type = NetType.Server;
+        }
+
+        this.texte = "Vous êtes : "+serverManager.type.toString();
       }
     }
     );
@@ -91,7 +103,7 @@ public class UI {
 
 public class Bouton {
   private PVector pos, taille;
-  private String route, texte;
+  public String route, texte;
   private boolean clicked = false, lastState = false;
 
   public Bouton(float x, float y, float tx, float ty, String r, String t) {
@@ -120,8 +132,7 @@ public class Bouton {
   }
 
   public void Action() {
-    println("Bouton pressé : "+route, texte
-      );
+    println("Bouton pressé :", route, texte);
   }
 }
 

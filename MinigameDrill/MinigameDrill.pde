@@ -17,7 +17,7 @@ void setup() {
   surface.setResizable(true);
   Entity.minigameDrill = this;
 
-  serverManager = new ServerManager(this, NetType.Server, "127.0.0.1");
+  serverManager = new ServerManager(this, NetType.Server, "192.168.43.85");
 
   //Particules de minage
   miningParticles = new ParticlesManager();
@@ -60,8 +60,8 @@ void setup() {
   fill(255);
   noStroke();
 
-  saveManager.Save("map1");
-  saveManager.LoadData("map1");
+  //saveManager.Save("map1");
+  //saveManager.LoadData("map1");
 }
 
 void draw() {
@@ -69,7 +69,7 @@ void draw() {
 
   if (playState == PlayState.Play) {
 
-    if (serverManager != null) serverManager.Update();
+    if (serverManager != null) serverManager.PreUpdate();
 
     camera.Update();
     camera.Translate();
@@ -90,6 +90,8 @@ void draw() {
   ui.Display();
 
   //Entity.PrintArray();
+  
+  serverManager.PostUpdate();
 }
 
 boolean up, down, right, left, collect;

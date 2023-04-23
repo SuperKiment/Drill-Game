@@ -82,6 +82,17 @@ static class Entity {
     return json;
   }
 
+  public String getNetInfo() {
+    String dataOut = "";
+    String separPlayer = ServerManager.separPlayer;
+    String separData = ServerManager.separData;
+    dataOut += separPlayer;
+
+    dataOut += ToWriteClient("posX") + pos.x + ToWriteClient("posY") + pos.y + ToWriteClient("ID") + ID + ToWriteClient("class") + getClearClass(this);
+
+    return dataOut;
+  }
+
   //=====================
   //========================================STATIC
   //=====================
@@ -231,7 +242,6 @@ static class Entity {
       Class c = Class.forName("Player");
     }
     catch (Exception e) {
-      
     }
     switch(json.getString("class")) {
     case "Player":

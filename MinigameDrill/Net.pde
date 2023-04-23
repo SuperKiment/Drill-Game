@@ -11,7 +11,7 @@ class ServerManager {
   public NetType type;
   public int port = 5204;
 
-  private String separPlayer = " | ", separData = " / ";
+  static final private String separPlayer = " | ", separData = " / ";
 
   float timerReconnexion = 0, cooldownReconnexion = 1000;
 
@@ -46,13 +46,19 @@ class ServerManager {
   }
 
 
-  public void Update() {
+  public void PreUpdate() {
     EnvoiBuffer.clear();
     if (type == NetType.Server) {
-      //SERVER
+      //SERVER RECEPTION
       if (server != null) {
         //Récup et traitement des données
-        server.write("ytestetstes salut");
+        Client c = server.available();
+        while (c != null) {
+          String data = c.readString();
+          println("dataIn : "+data);
+          c = server.available();
+        }
+        server.write("coucou");
       } else server = new Server(minigameDrill, port);
     } else if (type == NetType.Client) {
       //CLIENT
@@ -63,7 +69,9 @@ class ServerManager {
           String read = client.readString();
           println(read);
           if (read != null && read != "") {
+            //Découpe le string en hashmap
             DataIn = StringToHashClient(read);
+            //traite et crée ou bouge les entités
             traiterDonnees();
           }
 
@@ -76,6 +84,21 @@ class ServerManager {
           }
         }
       }
+    }
+  }
+
+  public void PostUpdate() {
+    if (type == NetType.Server) {
+      //SERVER ENVOI
+      if (server != null) {
+        String dataOut = "";
+        if (EnvoiBuffer != null && EnvoiBuffer.size() > 0) {
+          for (String data : EnvoiBuffer) {
+            dataOut += data;
+          }
+          server.write(dataOut);
+        }
+      } else server = new Server(minigameDrill, port);
     }
   }
 

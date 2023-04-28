@@ -10,7 +10,7 @@ public class MinigameDrill extends PApplet {
 	public static ParticlesManager miningParticles;
 	public static ParticlesManager finishMiningParticles;
 	public static ParticlesManager mouseParticles;
-	static public Camera camera;
+	public static Camera camera;
 
 	public static PlayState playState = PlayState.Title;
 	public UI ui;
@@ -19,7 +19,11 @@ public class MinigameDrill extends PApplet {
 	SaveManager saveManager;
 
 	public static void main(String[] args) {
+		try {
 		PApplet.main("Main.MinigameDrill");
+		} catch (Exception e) {
+			System.out.print(e);
+		}
 	}
 
 	public void settings() {
@@ -31,6 +35,7 @@ public class MinigameDrill extends PApplet {
 
 		  surface.setTitle("Drill MiniGame");
 		  surface.setResizable(true);
+/*
 		  Entity.minigameDrill = this;
 
 		  serverManager = new ServerManager(this, ServerManager.NetType.Server, "192.168.43.85");
@@ -52,7 +57,7 @@ public class MinigameDrill extends PApplet {
 
 		  camera = new Camera();
 
-		  //Ajout de player aux entités
+		  //Ajout de player aux entitï¿½s
 		  Entity.AllEntities = new ArrayList<Entity>();
 		  Entity.AllEntities.add(new Player());
 		  Entity.AllEntities.add(new Player("5412", false));
@@ -77,10 +82,11 @@ public class MinigameDrill extends PApplet {
 		  noStroke();
 
 		  //saveManager.Save("map1");
-		  //saveManager.LoadData("map1");
+		  //saveManager.LoadData("map1");*/
 		}
 
 	public void draw() {
+		/*
 		background(0);
 
 		if (playState == PlayState.Play) {
@@ -91,7 +97,7 @@ public class MinigameDrill extends PApplet {
 			camera.Update();
 			camera.Translate();
 
-			// Update et Display et toutes les entités
+			// Update et Display et toutes les entitï¿½s
 			Entity.EntityUpdate();
 			Entity.EntityDisplay();
 		}
@@ -109,6 +115,7 @@ public class MinigameDrill extends PApplet {
 		// Entity.PrintArray();
 
 		serverManager.PostUpdate();
+		*/
 	}
 
 	static public boolean up, down, right, left, collect;

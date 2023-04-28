@@ -34,7 +34,7 @@ public class ParticlesManager {
 		pop();
 	}
 
-	// Ajoute un paquet de particules (inutilisé) custom
+	// Ajoute un paquet de particules (inutilisï¿½) custom
 	public void addParticles(int puissance, PVector p) {
 		AllParticles.add(new Particles(puissance, p));
 	}
@@ -43,7 +43,7 @@ public class ParticlesManager {
 	public void addParticles(PVector p) {
 		/*
 		 * Type de forme Taille Position Vitesse Ralentissement (damp) Limite de temps
-		 * (si spécifié, autrement disparait par manque de vitesse) / 0 Nombre de
+		 * (si spï¿½cifiï¿½, autrement disparait par manque de vitesse) / 0 Nombre de
 		 * Particle
 		 */
 		AllParticles.add(new Particles(type, taille, p, vel, damp, timeLimit, nb));
@@ -83,7 +83,7 @@ public class ParticlesManager {
 
 	/*
 	 * Type de forme Taille Vitesse Ralentissement (damp) Limite de temps (si
-	 * spécifié, autrement disparait par manque de vitesse) / 0 Nombre de Particle
+	 * spï¿½cifiï¿½, autrement disparait par manque de vitesse) / 0 Nombre de Particle
 	 */
 	public void set(ParticleType t, float ta, float bV, float d, float tL, int nb) {
 		type = t;
@@ -124,7 +124,7 @@ public class ParticlesManager {
 
 		/*
 		 * Type de forme Taille Position Vitesse Ralentissement (damp) Limite de temps
-		 * (si spécifié, autrement disparait par manque de vitesse) / 0 Nombre de
+		 * (si spï¿½cifiï¿½, autrement disparait par manque de vitesse) / 0 Nombre de
 		 * Particle
 		 */
 		public Particles(ParticleType t, float ta, PVector p, float bV, float d, float tL, int nb) {
@@ -194,7 +194,7 @@ public class ParticlesManager {
 
 			/*
 			 * Type de forme Taille Position Vitesse Ralentissement (damp) Limite de temps
-			 * (si spécifié, autrement disparait par manque de vitesse)
+			 * (si spï¿½cifiï¿½, autrement disparait par manque de vitesse)
 			 */
 
 			public Particle(ParticleType t, float ta, PVector p, float bV, float d, float tL) {
@@ -235,7 +235,7 @@ public class ParticlesManager {
 
 				pos.add(ori);
 
-				// Soit il est timé soit il disparait quand il a plus de vitesse
+				// Soit il est timï¿½ soit il disparait quand il a plus de vitesse
 				if (!isTimed) {
 					if (vel < 0.1)
 						isMort = true;

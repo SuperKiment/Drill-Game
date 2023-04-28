@@ -6,7 +6,6 @@ import Main.MinigameDrill;
 import Utils.Utils;
 import processing.core.*;
 import processing.data.*;
-import java.lang.Math.*;
 
 import Main.ServerManager;
 
@@ -14,6 +13,7 @@ public abstract class Entity {
 
 	public static ArrayList<Entity> AllEntities;
 	public static MinigameDrill minigameDrill;
+	public static PGraphics window;
 
 	protected BarreHP barreHP;
 
@@ -44,7 +44,7 @@ public abstract class Entity {
 	public void Display() {
 	}
 
-	// Retourne une entité en cas d'interaction avec une entité
+	// Retourne une entitÃ© en cas d'interaction avec une entitÃ©
 	public Entity Interact(ArrayList<Entity> array) {
 		PVector testPos = pos.copy();
 		PVector testDir = dir.copy();
@@ -56,7 +56,7 @@ public abstract class Entity {
 		return e;
 	}
 
-	// Appelé quand le collectable est en train de se faire collecter
+	// Appelï¿½ quand le collectable est en train de se faire collecter
 	protected void Collected() {
 		taille.sub(new PVector(1, 1));
 		if (taille.x < collectMinTaille || taille.y < collectMinTaille)
@@ -115,7 +115,7 @@ public abstract class Entity {
 	// ========================================STATIC
 	// =====================
 
-	// Update toutes les entités
+	// Update toutes les entitï¿½s
 	public static void EntityUpdate() {
 		for (int i = 0; i < AllEntities.size(); i++) {
 			Entity e = AllEntities.get(i);
@@ -130,7 +130,7 @@ public abstract class Entity {
 		}
 	}
 
-	// Affiche toutes les entités
+	// Affiche toutes les entitï¿½s
 	public static void EntityDisplay() {
 		for (int i = 0; i < AllEntities.size(); i++) {
 			Entity e = AllEntities.get(i);
@@ -139,7 +139,7 @@ public abstract class Entity {
 		}
 	}
 
-	// Teste les collisions avec d'autres entités
+	// Teste les collisions avec d'autres entitï¿½s
 	public static void CollisionEntity(ArrayList<Entity> array, Entity me) {
 		try {
 			for (Entity e : array) {
@@ -171,7 +171,7 @@ public abstract class Entity {
 		}
 	}
 
-	// Vérifie s'il y a collision
+	// Vï¿½rifie s'il y a collision
 	private static boolean CollisionOk(Entity me, Entity e) {
 		if (me.pos.x - me.taille.x / 2 < e.pos.x + e.taille.x / 2
 				&& me.pos.x + me.taille.x / 2 > e.pos.x - e.taille.x / 2
@@ -197,7 +197,7 @@ public abstract class Entity {
 	}
 
 	public static void AddEntityFromServer(HashMap<String, String> hash) {
-		// Si il y a une class spécifiée dans le hash
+		// Si il y a une class spï¿½cifiï¿½e dans le hash
 		if (hash.containsKey("class")) {
 			switch (hash.get("class")) {
 			case "Collectable":
@@ -216,11 +216,11 @@ public abstract class Entity {
 				break;
 
 			default:
-				MinigameDrill.println("Pas de classe trouvée pour :", hash);
+				MinigameDrill.println("Pas de classe trouvï¿½e pour :", hash);
 				break;
 			}
 		} else {
-			System.out.println("Pas de spécification de classe : " + hash);
+			System.out.println("Pas de spï¿½cification de classe : " + hash);
 		}
 	}
 
@@ -255,7 +255,7 @@ public abstract class Entity {
 
 	public static void add(JSONObject json) {
 		try {
-			// On doit pouvoir récup le nom de la class et de l'instancier ici
+			// On doit pouvoir rï¿½cup le nom de la class et de l'instancier ici
 			Class c = Class.forName("Player");
 		} catch (Exception e) {
 		}

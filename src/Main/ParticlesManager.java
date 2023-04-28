@@ -1,13 +1,15 @@
 package Main;
 
 import processing.core.*;
+
+import java.awt.Color;
 import java.util.*;
 
 public class ParticlesManager {
 
 	private boolean stroke = false;
-	private color col = color(255, 255, 255);
-	private float taille = 5, vel = 1, timeLimit = 1000, damp = 0.1;
+	private Color col = new Color(255, 255, 255);
+	private float taille = 5, vel = 1, timeLimit = 1000, damp = 0.1f;
 	private int nb = 5;
 	private ParticleType type = ParticleType.Circle;
 
@@ -18,10 +20,10 @@ public class ParticlesManager {
 	}
 
 	public void Display() {
-		push();
+		MinigameDrill.window.push();
 		if (stroke)
-			stroke(0);
-		fill(col);
+			MinigameDrill.window.stroke(0);
+		MinigameDrill.window.fill(col.getRGB());
 		for (int i = 0; i < AllParticles.size(); i++) {
 			Particles p = AllParticles.get(i);
 
@@ -31,7 +33,7 @@ public class ParticlesManager {
 				AllParticles.remove(i);
 		}
 
-		pop();
+		MinigameDrill.window.pop();
 	}
 
 	// Ajoute un paquet de particules (inutilis�) custom
@@ -53,8 +55,12 @@ public class ParticlesManager {
 		stroke = s;
 	}
 
-	public void setColor(color c) {
+	public void setColor(Color c) {
 		col = c;
+	}
+	
+	public void setColor(int r, int g, int b) {
+		col = new Color(r, g, b);
 	}
 
 	public void setTaille(float t) {
@@ -191,40 +197,44 @@ public class ParticlesManager {
 			private PVector pos, ori;
 			private float taille, vel, damp, timer, timeLimit = 0;
 			private boolean isMort = false, isTimed = false;
-
+			private Random r;
 			/*
 			 * Type de forme Taille Position Vitesse Ralentissement (damp) Limite de temps
 			 * (si sp�cifi�, autrement disparait par manque de vitesse)
 			 */
 
 			public Particle(ParticleType t, float ta, PVector p, float bV, float d, float tL) {
+				r = new Random();
+				
 				type = t;
 				taille = ta;
 				pos = p.copy();
 
-				vel = random(bV / 2, bV * 2);
+				vel = r.nextFloat(bV / 2, bV * 2);
 
 				ori = PVector.random2D();
 				ori.setMag(1);
 
-				damp = random(d / 10, d);
+				damp = r.nextFloat(d / 10, d);
 
-				timer = millis();
-				timeLimit = random(tL / 2, tL * 2);
+				timer = MinigameDrill.mgd.millis();
+				timeLimit = r.nextFloat(tL / 2, tL * 2);
 				isTimed = true;
 			}
 
 			public Particle(ParticleType t, float ta, PVector p, float bV, float d) {
+				r = new Random();
+
 				type = t;
 				taille = ta;
 				pos = p.copy();
 
-				vel = random(bV / 2, bV * 2);
+				vel = r.nextFloat(bV / 2, bV * 2);
 
 				ori = PVector.random2D();
 				ori.setMag(1);
 
-				damp = random(d / 10, d);
+				damp = r.nextFloat(d / 10, d);
 
 				isTimed = false;
 			}
@@ -240,32 +250,32 @@ public class ParticlesManager {
 					if (vel < 0.1)
 						isMort = true;
 				} else {
-					if (millis() - timer > timeLimit)
+					if (MinigameDrill.mgd.millis() - timer > timeLimit)
 						isMort = true;
 				}
 			}
 
 			public void Display() {
-				push();
+				MinigameDrill.window.push();
 
-				translate(pos.x, pos.y);
+				MinigameDrill.window.translate(pos.x, pos.y);
 
-				rectMode(CENTER);
+				MinigameDrill.window.rectMode(MinigameDrill.CENTER);
 
-				strokeWeight(2);
+				MinigameDrill.window.strokeWeight(2);
 
 				switch (type) {
 
 				case Square:
-					rect(0, 0, taille, taille);
+					MinigameDrill.window.rect(0, 0, taille, taille);
 					break;
 
 				case Circle:
-					ellipse(0, 0, taille, taille);
+					MinigameDrill.window.ellipse(0, 0, taille, taille);
 					break;
 				}
 
-				pop();
+				MinigameDrill.window.pop();
 			}
 		}
 	}

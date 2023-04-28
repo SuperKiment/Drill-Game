@@ -1,6 +1,5 @@
 package Main;
 
-import processing.core.*;
 import processing.data.*;
 import Entities.Entity;
 
@@ -10,11 +9,11 @@ public class SaveManager {
 	public String[] saves;
 
 	public SaveManager() {
-		saves = loadStrings(savesIndexPath);
+		saves = MinigameDrill.mgd.loadStrings(savesIndexPath);
 	}
 
 	public void LoadData(String JSONPath) {
-		JSONObject all = loadJSONObject("saves/" + JSONPath + ".json");
+		JSONObject all = MinigameDrill.mgd.loadJSONObject("saves/" + JSONPath + ".json");
 
 		Entity.loadFromJSON(all.getJSONArray("Entities"));
 	}
@@ -24,6 +23,6 @@ public class SaveManager {
 
 		save.setJSONArray("Entities", Entity.getAllEntitiesJSON());
 
-		saveJSONObject(save, path + name + ".json");
+		MinigameDrill.mgd.saveJSONObject(save, path + name + ".json");
 	}
 }

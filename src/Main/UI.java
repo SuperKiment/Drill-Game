@@ -25,72 +25,74 @@ public class UI {
 
 	private void DisplayMateriaux(Player player) {
 
-		push();
-		rectMode(CORNERS);
-		fill(255, 225, 255, 20);
-		rect(width * 4 / 5, 0, width, height / 2);
-		pop();
+		MinigameDrill.window.push();
+		MinigameDrill.window.rectMode(MinigameDrill.CORNERS);
+		MinigameDrill.window.fill(255, 225, 255, 20);
+		MinigameDrill.window.rect(MinigameDrill.window.width * 4 / 5, 0, MinigameDrill.window.width,
+				MinigameDrill.window.height / 2);
+		MinigameDrill.window.pop();
 
 		int nbTypes = Collectable.CollectableType.values().length;
 		for (int i = 0; i < Collectable.CollectableType.values().length; i++) {
-			push();
-			fill(255);
-			textSize(20);
-			textAlign(LEFT);
+			MinigameDrill.window.push();
+			MinigameDrill.window.fill(255);
+			MinigameDrill.window.textSize(20);
+			MinigameDrill.window.textAlign(processing.core.PGraphics.LEFT);
 
-			text(Collectable.CollectableType.values()[i].toString(), width * 4.1 / 5, (i + 0.5) * (height / 2) / nbTypes);
-			text(player.Stock.get(Collectable.CollectableType.values()[i].toString()), width * 4.7 / 5,
-					(i + 0.5) * (height / 2) / nbTypes);
+			MinigameDrill.window.text(Collectable.CollectableType.values()[i].toString(),
+					MinigameDrill.window.width * 4.1f / 5, (i + 0.5f) * (MinigameDrill.window.height / 2) / nbTypes);
+			MinigameDrill.window.text(player.Stock.get(Collectable.CollectableType.values()[i].toString()),
+					MinigameDrill.window.width * 4.7f / 5, (i + 0.5f) * (MinigameDrill.window.height / 2) / nbTypes);
 
-			pop();
+			MinigameDrill.window.pop();
 		}
 	}
 
 	private void DisplayNet(ServerManager s) {
-		push();
+		MinigameDrill.window.push();
 		try {
-			rectMode(CORNER);
-			fill(255, 255, 255, 50);
-			rect(0, 0, 150, 50);
-			fill(255);
-			textAlign(LEFT);
-			textSize(10);
+			MinigameDrill.window.rectMode(processing.core.PGraphics.CORNER);
+			MinigameDrill.window.fill(255, 255, 255, 50);
+			MinigameDrill.window.rect(0, 0, 150, 50);
+			MinigameDrill.window.fill(255);
+			MinigameDrill.window.textAlign(processing.core.PGraphics.LEFT);
+			MinigameDrill.window.textSize(10);
 			if (s.type == ServerManager.NetType.Server) {
-				text("Server", 20, 20);
-				text("IP : " + Server.ip(), 20, 30);
-				// text("Clients connectés : "+s.server.clientCount, 20, 40);
+				MinigameDrill.window.text("Server", 20, 20);
+				MinigameDrill.window.text("IP : " + Server.ip(), 20, 30);
+				// text("Clients connectï¿½s : "+s.server.clientCount, 20, 40);
 			} else {
-				text("Client", 20, 20);
-				text("Connecté : " + s.getClient().ip(), 20, 30);
+				MinigameDrill.window.text("Client", 20, 20);
+				MinigameDrill.window.text("Connectï¿½ : " + s.getClient().ip(), 20, 30);
 			}
 		} catch (Exception e) {
 			MinigameDrill.println("oopsi doopsi");
 		}
-		pop();
+		MinigameDrill.window.pop();
 	}
 
 	private void DisplayBoutons() {
 		for (Bouton b : AllBoutons) {
 			if (MinigameDrill.playState.toString().equals(b.route)) {
-				push();
+				MinigameDrill.window.push();
 				StyleBoutons();
 				b.Update();
-				pop();
+				MinigameDrill.window.pop();
 			}
 		}
 	}
 
 	public void SetAllBoutons() {
 		// Bouton titre
-		AllBoutons.add(new Bouton(width / 2, height / 2, 500, 200, "Title", "Play !") {
+		AllBoutons.add(new Bouton(MinigameDrill.window.width / 2, MinigameDrill.window.height / 2, 500, 200, "Title", "Play !") {
 			public void Action() {
 				MinigameDrill.playState = MinigameDrill.PlayState.Play;
 			}
 		});
 
 		// Bouton changement server/client
-		AllBoutons.add(new Bouton(width / 2, height * 3 / 4, 500, 100, "Title",
-				"Vous êtes : " + MinigameDrill.serverManager.type.toString()) {
+		AllBoutons.add(new Bouton(MinigameDrill.window.width / 2, MinigameDrill.window.height * 3 / 4, 500, 100, "Title",
+				"Vous Ãªtes : " + MinigameDrill.serverManager.type.toString()) {
 			public void Action() {
 				if (MinigameDrill.serverManager.type == ServerManager.NetType.Server) {
 					MinigameDrill.serverManager.type = ServerManager.NetType.Client;
@@ -99,13 +101,13 @@ public class UI {
 					MinigameDrill.serverManager.type = ServerManager.NetType.Server;
 				}
 
-				this.texte = "Vous êtes : " + MinigameDrill.serverManager.type.toString();
+				this.texte = "Vous ï¿½tes : " + MinigameDrill.serverManager.type.toString();
 			}
 		});
 	}
-	
-	//------------------------BOUTON
-	
+
+	// ------------------------BOUTON
+
 	public class Bouton {
 		private PVector pos, taille;
 		public String route, texte;
@@ -119,39 +121,36 @@ public class UI {
 		}
 
 		public void Update() {
-			if (mouseX > pos.x - taille.x / 2 && mouseX < pos.x + taille.x / 2 && mouseY > pos.y - taille.y / 2
-					&& mouseY < pos.y + taille.y / 2) {
+			if (MinigameDrill.mgd.mouseX > pos.x - taille.x / 2 && MinigameDrill.mgd.mouseX < pos.x + taille.x / 2 && MinigameDrill.mgd.mouseY > pos.y - taille.y / 2
+					&& MinigameDrill.mgd.mouseY < pos.y + taille.y / 2) {
 				clicked = false;
-				fill(50);
-				strokeWeight(3);
-				if (mousePressed) {
-					fill(100);
+				MinigameDrill.window.fill(50);
+				MinigameDrill.window.strokeWeight(3);
+				if (MinigameDrill.mgd.mousePressed) {
+					MinigameDrill.window.fill(100);
 					clicked = true;
 				}
 				if (!clicked && lastState)
 					Action();
 				lastState = clicked;
 			}
-			rect(pos.x, pos.y, taille.x, taille.y);
-			fill(255);
-			text(texte, pos.x, pos.y);
+			MinigameDrill.window.rect(pos.x, pos.y, taille.x, taille.y);
+			MinigameDrill.window.fill(255);
+			MinigameDrill.window.text(texte, pos.x, pos.y);
 		}
 
 		public void Action() {
-			MinigameDrill.println("Bouton pressé :", route, texte);
+			MinigameDrill.println("Bouton pressï¿½ :", route, texte);
 		}
-		
-		public void StyleBoutons() {
-			  fill(0);
-			  stroke(255);
-			  strokeWeight(1);
-			  textAlign(CENTER);
-			  textSize(50);
-			  rectMode(CENTER);
-			}
 
 	}
+
+	public void StyleBoutons() {
+		MinigameDrill.window.fill(0);
+		MinigameDrill.window.stroke(255);
+		MinigameDrill.window.strokeWeight(1);
+		MinigameDrill.window.textAlign(MinigameDrill.CENTER);
+		MinigameDrill.window.textSize(50);
+		MinigameDrill.window.rectMode(MinigameDrill.CENTER);
+	}
 }
-
-
-

@@ -17,11 +17,11 @@ public class Enemy extends Entity {
 	}
 
 	public void Display() {
-		push();
-		translate(pos.x, pos.y);
-		fill(255, 0, 0);
-		rect(0, 0, taille.x, taille.y);
-		pop();
+		MinigameDrill.window.push();
+		MinigameDrill.window.translate(pos.x, pos.y);
+		MinigameDrill.window.fill(255, 0, 0);
+		MinigameDrill.window.rect(0, 0, taille.x, taille.y);
+		MinigameDrill.window.pop();
 	}
 
 	void UpdateCible() {

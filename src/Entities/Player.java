@@ -44,16 +44,16 @@ public class Player extends Entity {
 		if (ID.equals("52")) {
 			MinigameDrill.println(pos);
 		}
-		push();
-		translate(pos.x, pos.y);
-		text(ID, 0, taille.y * 2);
-		rotate(dir.heading());
-		rect(0, 0, taille.x, taille.y);
-		rect(-taille.x / 2, 0, taille.x / 2, taille.y / 2);
-		fill(125);
-		ellipse(taille.x / 2.5, taille.y / 3, 10, 10);
-		ellipse(taille.x / 2.5, -taille.y / 3, 10, 10);
-		pop();
+		MinigameDrill.window.push();
+		MinigameDrill.window.translate(pos.x, pos.y);
+		MinigameDrill.window.text(ID, 0, taille.y * 2);
+		MinigameDrill.window.rotate(dir.heading());
+		MinigameDrill.window.rect(0, 0, taille.x, taille.y);
+		MinigameDrill.window.rect(-taille.x / 2, 0, taille.x / 2, taille.y / 2);
+		MinigameDrill.window.fill(125);
+		MinigameDrill.window.ellipse(taille.x / 2.5f, taille.y / 3, 10, 10);
+		MinigameDrill.window.ellipse(taille.x / 2.5f, -taille.y / 3, 10, 10);
+		MinigameDrill.window.pop();
 	}
 
 	public void Update() {
@@ -66,11 +66,11 @@ public class Player extends Entity {
 			else
 				collectable = null;
 		} else {
-			// Se déplalcer grace au dataIn du serv ?
+			// Se dï¿½plalcer grace au dataIn du serv ?
 		}
 	}
 
-	// Définit la direction du player
+	// Dï¿½finit la direction du player
 	private void Direction() {
 		if (controllable) {
 			isMoving = false;
@@ -96,13 +96,13 @@ public class Player extends Entity {
 		dir.setMag(speed);
 	}
 
-	// Fait se déplacer
+	// Fait se dï¿½placer
 	private void Deplacement() {
 		if (isMoving || collecting)
 			pos.add(dir);
 	}
 
-	// Vérifie si on peut bien collecter
+	// Vï¿½rifie si on peut bien collecter
 	private boolean Collect() {
 
 		Entity interact = Interact(AllEntities);

@@ -1,6 +1,7 @@
 package Entities;
 
 import Main.MinigameDrill;
+import java.awt.Color;
 
 public class Collectable extends Entity {
 
@@ -35,26 +36,26 @@ public class Collectable extends Entity {
 	}
 
 	public void Display() {
-	    push();
+		MinigameDrill.window.push();
 	    switch(type) {
 	      case Pierre:
-	      fill(125);
+	    	  MinigameDrill.window.fill(125);
 	      break;
 	      case Bois:
-	      fill(#935912);
+	    	  MinigameDrill.window.fill(0xFF935912);
 	      break;
 	      case Or:
-	      fill(#E0ED32);
+	    	  MinigameDrill.window.fill(0xFFE0ED32);
 	      break;
 	      case Argent:
-	      fill(#C2D5D6);
+	    	  MinigameDrill.window.fill(0xFFC2D5D6);
 	      break;
 	      case Uranium:
-	      fill(#2FDE4D);
+	    	  MinigameDrill.window.fill(0xFF2FDE4D);
 	      break;
 	    }
-	    rect(pos.x, pos.y, taille.x, taille.y);
-	    pop();
+	    MinigameDrill.window.rect(pos.x, pos.y, taille.x, taille.y);
+	    MinigameDrill.window.pop();
 	  }
 
 	public void setMort() {

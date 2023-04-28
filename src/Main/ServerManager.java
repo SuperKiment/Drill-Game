@@ -1,6 +1,7 @@
 package Main;
 
 import processing.net.Client;
+import java.util.Random;
 import processing.net.Server;
 import java.util.*;
 import Entities.Entity;
@@ -38,7 +39,8 @@ public class ServerManager {
 		DataIn = new HashMap<String, HashMap<String, String>>();
 
 		// Init un ID random
-		ID = Float.toString(Integer.valueOf(random(1000, 9999)));
+		Random r = new Random();
+		ID = Float.toString(r.nextInt(1000, 9999));
 		EnvoiBuffer = new ArrayList<String>();
 		type = t;
 
@@ -58,7 +60,7 @@ public class ServerManager {
 		if (type == NetType.Server) {
 			// SERVER RECEPTION
 			if (server != null) {
-				// Récup et traitement des données
+				// Rï¿½cup et traitement des donnï¿½es
 				Client c = server.available();
 				while (c != null) {
 					String data = c.readString();
@@ -71,23 +73,23 @@ public class ServerManager {
 		} else if (type == NetType.Client) {
 			// CLIENT
 			if (client != null) {
-				// Si on est connectés, envoyer les données. Sinon se reconnecter
+				// Si on est connectï¿½s, envoyer les donnï¿½es. Sinon se reconnecter
 				if (client.ip() != null) {
-					// Récup des données
+					// Rï¿½cup des donnï¿½es
 					String read = client.readString();
-					println(read);
+					MinigameDrill.println(read);
 					if (read != null && read != "") {
-						// Découpe le string en hashmap
+						// Dï¿½coupe le string en hashmap
 						DataIn = StringToHashClient(read);
-						// traite et crée ou bouge les entités
+						// traite et crï¿½e ou bouge les entitï¿½s
 						traiterDonnees();
 					}
 
-					// Envoi des données
+					// Envoi des donnï¿½es
 					client.write(separPlayer + ToWriteClient("ID") + ID + ToWriteClient("coucou"));
 				} else {
-					if (millis() - timerReconnexion > cooldownReconnexion) {
-						timerReconnexion = millis();
+					if (MinigameDrill.mgd.millis() - timerReconnexion > cooldownReconnexion) {
+						timerReconnexion = MinigameDrill.mgd.millis();
 						client = new Client(minigameDrill, ipClient, port);
 					}
 				}
@@ -145,7 +147,7 @@ public class ServerManager {
 		return res;
 	}
 
-	// Traitement des données
+	// Traitement des donnï¿½es
 	private void traiterDonnees() {
 		ArrayList<String> AllIDs = new ArrayList<String>();
 		for (Entity e : Entity.AllEntities) {

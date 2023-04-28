@@ -1,6 +1,6 @@
 package Entities;
 import processing.core.*;
-
+import Main.MinigameDrill;
 
 public class BarreHP {
 
@@ -14,14 +14,13 @@ public class BarreHP {
 	  void Display(float hp) {
 	    HP = hp;
 
-	    push();
+	    MinigameDrill.window.push();
 
-	    fill(50);
-	    rect(0, 0, hp, 20);
+	    MinigameDrill.window.fill(50);
+	    MinigameDrill.window.rect(0, 0, hp, 20);
 
-	    fill(255, 0, 0);
-	    rect(0, 0, hp-2, 20-2);
-
-	    pop();
+	    MinigameDrill.window.fill(255, 0, 0);
+	    MinigameDrill.window.rect(0, 0, hp-2, 20-2);
+	    MinigameDrill.window.pop();
 	  }
 	}

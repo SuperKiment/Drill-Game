@@ -5,9 +5,6 @@ import java.util.HashMap;
 import processing.core.*;
 import processing.data.*;
 import Utils.Utils;
-import Entities.Collectable;
-
-import Main.Camera;
 
 public class Player extends Entity {
 	private boolean isMoving = false, collecting = false, controllable = true, loaded = false;
@@ -48,6 +45,7 @@ public class Player extends Entity {
 		MinigameDrill.window.translate(pos.x, pos.y);
 		MinigameDrill.window.text(ID, 0, taille.y * 2);
 		MinigameDrill.window.rotate(dir.heading());
+		MinigameDrill.window.rectMode(MinigameDrill.window.CENTER);
 		MinigameDrill.window.rect(0, 0, taille.x, taille.y);
 		MinigameDrill.window.rect(-taille.x / 2, 0, taille.x / 2, taille.y / 2);
 		MinigameDrill.window.fill(125);
@@ -59,6 +57,7 @@ public class Player extends Entity {
 	public void Update() {
 		Direction();
 		Deplacement();
+		
 
 		if (controllable) {
 			if (MinigameDrill.collect)
@@ -133,24 +132,10 @@ public class Player extends Entity {
 		Stock.put(type, Stock.get(type) + amount);
 	}
 
-	public void loadData(HashMap<String, String> dataPlayer) {
-		if (!loaded) {
-			if (dataPlayer.containsKey("posX"))
-				pos.set(Float.valueOf(dataPlayer.get("posX")), Float.valueOf(dataPlayer.get("posY")));
-			loaded = true;
-		}
-		if (dataPlayer.containsKey("dirX")) {
-			dir.set(Float.valueOf(dataPlayer.get("dirX")), Float.valueOf(dataPlayer.get("dirY")));
-			dir.setMag(1);
-		}
-		if (dataPlayer.containsKey("tailleX"))
-			taille.set(Float.valueOf(dataPlayer.get("tailleX")), Float.valueOf(dataPlayer.get("tailleY")));
-		if (dataPlayer.containsKey("ID"))
-			ID = dataPlayer.get("ID");
-		if (dataPlayer.containsKey("isMoving")) {
-			isMoving = Utils.StringToBoolean(dataPlayer.get("isMoving"));
-			MinigameDrill.println(dir);
-		}
+	public void loadFromJSON(JSONObject data) {
+		if (data.hasKey("ID")) ID = data.getString("ID");
+		if (data.hasKey("pos.x") && data.hasKey("pos.y")) pos = new PVector(data.getFloat("pos.x"), data.getFloat("pos.y"));
+		if (data.hasKey("dir.x") && data.hasKey("dir.y")) pos = new PVector(data.getFloat("pos.x"), data.getFloat("pos.y"));
 	}
 
 	public JSONObject getJSON() {
@@ -175,5 +160,9 @@ public class Player extends Entity {
 		});
 
 		return json;
+	}
+	
+	public boolean isControllable() {
+		return controllable;
 	}
 }

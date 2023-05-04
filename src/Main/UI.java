@@ -19,7 +19,7 @@ public class UI {
 		if (MinigameDrill.playState == MinigameDrill.PlayState.Play) {
 			DisplayMateriaux(player);
 		}
-		DisplayNet(MinigameDrill.serverManager);
+		DisplayNet();
 		DisplayBoutons();
 	}
 
@@ -48,7 +48,7 @@ public class UI {
 		}
 	}
 
-	private void DisplayNet(ServerManager s) {
+	private void DisplayNet() {
 		MinigameDrill.window.push();
 		try {
 			MinigameDrill.window.rectMode(processing.core.PGraphics.CORNER);
@@ -57,16 +57,23 @@ public class UI {
 			MinigameDrill.window.fill(255);
 			MinigameDrill.window.textAlign(processing.core.PGraphics.LEFT);
 			MinigameDrill.window.textSize(10);
-			if (s.type == ServerManager.NetType.Server) {
-				MinigameDrill.window.text("Server", 20, 20);
-				MinigameDrill.window.text("IP : " + Server.ip(), 20, 30);
-				// text("Clients connect�s : "+s.server.clientCount, 20, 40);
+			if (ServerManager.type == ServerManager.NetType.Server) {
+				if (ServerManager.getServer() != null) {
+					MinigameDrill.window.text("Server", 20, 20);
+					MinigameDrill.window.text("IP : " + Server.ip(), 20, 30);
+					// text("Clients connect�s : "+s.server.clientCount, 20, 40);
+				}
 			} else {
-				MinigameDrill.window.text("Client", 20, 20);
-				MinigameDrill.window.text("Connect� : " + s.getClient().ip(), 20, 30);
+				if (ServerManager.getClient() != null && ServerManager.getClient().ip() != null) {
+					MinigameDrill.window.text("Client", 20, 20);
+					MinigameDrill.window.text("Connect� : " + ServerManager.getClient().ip(), 20, 30);
+				} else {
+					MinigameDrill.window.text("Problème de connexion au server", 20, 30);
+
+				}
 			}
 		} catch (Exception e) {
-			MinigameDrill.println("oopsi doopsi");
+			MinigameDrill.println("oopsi doopsi" + e);
 		}
 		MinigameDrill.window.pop();
 	}
@@ -84,24 +91,34 @@ public class UI {
 
 	public void SetAllBoutons() {
 		// Bouton titre
-		AllBoutons.add(new Bouton(MinigameDrill.window.width / 2, MinigameDrill.window.height / 2, 500, 200, "Title", "Play !") {
+		AllBoutons.add(new Bouton(MinigameDrill.window.width / 2, MinigameDrill.window.height / 2, 500, 200, "Title",
+				"Play !") {
 			public void Action() {
 				MinigameDrill.playState = MinigameDrill.PlayState.Play;
 			}
 		});
 
 		// Bouton changement server/client
-		AllBoutons.add(new Bouton(MinigameDrill.window.width / 2, MinigameDrill.window.height * 3 / 4, 500, 100, "Title",
-				"Vous êtes : " + MinigameDrill.serverManager.type.toString()) {
+		AllBoutons.add(new Bouton(MinigameDrill.window.width / 2, MinigameDrill.window.height * 3 / 4, 500, 100,
+				"Title", "Vous êtes : " + ServerManager.type.toString()) {
 			public void Action() {
-				if (MinigameDrill.serverManager.type == ServerManager.NetType.Server) {
-					MinigameDrill.serverManager.type = ServerManager.NetType.Client;
-					MinigameDrill.serverManager.UpdateInstance();
+				if (ServerManager.type == ServerManager.NetType.Server) {
+					ServerManager.type = ServerManager.NetType.Client;
+					// MinigameDrill.serverManager.UpdateInstance();
 				} else {
-					MinigameDrill.serverManager.type = ServerManager.NetType.Server;
+					ServerManager.type = ServerManager.NetType.Server;
 				}
 
-				this.texte = "Vous �tes : " + MinigameDrill.serverManager.type.toString();
+				this.texte = "Vous �tes : " + ServerManager.type.toString();
+			}
+		});
+
+		// Bouton quitter
+		AllBoutons.add(new Bouton(MinigameDrill.window.width * 3 / 4, MinigameDrill.window.height / 6, 50, 50,
+				"Title", "X") {
+			public void Action() {
+				ServerManager.connexionClient = null;
+				MinigameDrill.mgd.exit();
 			}
 		});
 	}
@@ -121,7 +138,8 @@ public class UI {
 		}
 
 		public void Update() {
-			if (MinigameDrill.mgd.mouseX > pos.x - taille.x / 2 && MinigameDrill.mgd.mouseX < pos.x + taille.x / 2 && MinigameDrill.mgd.mouseY > pos.y - taille.y / 2
+			if (MinigameDrill.mgd.mouseX > pos.x - taille.x / 2 && MinigameDrill.mgd.mouseX < pos.x + taille.x / 2
+					&& MinigameDrill.mgd.mouseY > pos.y - taille.y / 2
 					&& MinigameDrill.mgd.mouseY < pos.y + taille.y / 2) {
 				clicked = false;
 				MinigameDrill.window.fill(50);

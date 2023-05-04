@@ -90,18 +90,6 @@ public abstract class Entity {
 		return json;
 	}
 
-	public String getNetInfo() {
-		String dataOut = "";
-		String separPlayer = ServerManager.separPlayer;
-		String separData = ServerManager.separData;
-		dataOut += separPlayer;
-
-		dataOut += ServerManager.ToWriteClient("posX") + pos.x + ServerManager.ToWriteClient("posY") + pos.y
-				+ ServerManager.ToWriteClient("ID") + ID + ServerManager.ToWriteClient("class")
-				+ Utils.getClearClass(this);
-
-		return dataOut;
-	}
 
 	public PVector getTaille() {
 		return taille;
@@ -245,7 +233,7 @@ public abstract class Entity {
 		return array;
 	}
 
-	public static void loadFromJSON(JSONArray json) {
+	public static void loadAllFromJSON(JSONArray json) {
 		AllEntities.clear();
 
 		for (int i = 0; i < json.size(); i++) {

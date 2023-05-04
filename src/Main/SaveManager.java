@@ -15,7 +15,7 @@ public class SaveManager {
 	public void LoadData(String JSONPath) {
 		JSONObject all = MinigameDrill.mgd.loadJSONObject("saves/" + JSONPath + ".json");
 
-		Entity.loadFromJSON(all.getJSONArray("Entities"));
+		Entity.loadAllFromJSON(all.getJSONArray("Entities"));
 	}
 
 	public void Save(String name) {

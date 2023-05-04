@@ -1,5 +1,4 @@
 package Entities;
-import processing.core.*;
 import Main.MinigameDrill;
 
 public class BarreHP {

@@ -1,6 +1,7 @@
 package Main;
 
 import processing.core.*;
+import processing.data.*;
 
 import Entities.*;
 
@@ -17,6 +18,9 @@ public class MinigameDrill extends PApplet {
 
 	public static final int CENTER = 3;
 	public static final int CORNER = 0;
+	
+	private static String playerInfosPath = "data/player-info.json";
+	private static JSONObject playerInfos;
 
 	public static PlayState playState = PlayState.Title;
 	public UI ui;
@@ -40,34 +44,38 @@ public class MinigameDrill extends PApplet {
 	public void setup() {
 		window = this.g;
 		mgd = this;
+		
+		playerInfos = loadJSONObject(playerInfosPath);
 
 		surface.setTitle("Drill MiniGame");
-		surface.setResizable(true);
+		surface.setResizable(false);
 
 		Entity.minigameDrill = this;
 		Entity.AllEntities = new ArrayList<Entity>();
 
-		serverManager = new ServerManager(this, ServerManager.NetType.Server, "192.168.43.85");
+		serverManager = new ServerManager(this, ServerManager.NetType.Client, "127.0.0.1");
 
 		miningParticles = new ParticlesManager();
 		finishMiningParticles = new ParticlesManager();
 		mouseParticles = new ParticlesManager();
-		
-		// Particules de minage miningParticles = new ParticlesManager();
+
+		// Particules de minage
 		miningParticles.set(ParticleType.Circle, 5, 2, 0.02f, 100, 2);
 		miningParticles.setColor(245, 185, 54);
 
-		// Particules de fin de minage finishMiningParticles = new ParticlesManager();
+		// Particules de fin de minage
 		finishMiningParticles.set(ParticleType.Circle, 10, 2, 0.1f, 0, 20);
 		finishMiningParticles.setColor(255, 255, 255);
 
-		// Particules de souris mouseParticles = new ParticlesManager();
+		// Particules de souris
 		mouseParticles.set(ParticleType.Circle, 2, 1, 0.1f, 5, 1);
 		mouseParticles.setColor(255, 255, 255);
 
 		camera = new Camera();
 
-		// Ajout de player aux entit�s Entity.AllEntities = new ArrayList<Entity>();
+		Player p = new Player();
+		
+		// Ajout de player aux entit�s
 		Entity.AllEntities.add(new Player());
 		Entity.AllEntities.add(new Player("5412", false));
 
@@ -87,8 +95,11 @@ public class MinigameDrill extends PApplet {
 		// Base styles d'affichage rectMode(CENTER); textAlign(CENTER, CENTER);
 		fill(255);
 		noStroke();
+		
+		println("fhuezi");
 
-		// saveManager.Save("map1"); //saveManager.LoadData("map1");
+		// saveManager.Save("map1");
+		// saveManager.LoadData("map1");
 
 	}
 
@@ -104,7 +115,10 @@ public class MinigameDrill extends PApplet {
 			camera.Update();
 			camera.Translate();
 
+			ShowGrid();
+
 			// Update et Display et toutes les entit�s Entity.EntityUpdate();
+			Entity.EntityUpdate();
 			Entity.EntityDisplay();
 		}
 
@@ -153,5 +167,23 @@ public class MinigameDrill extends PApplet {
 
 	public enum PlayState {
 		Title, Play
+	}
+
+	private void ShowGrid() {
+		int tailleCases = 50;
+		int tailleGrid = width / tailleCases;
+		push();
+		stroke(50);
+		fill(50);
+		// Grid au sol
+		for (int x = 0; x < tailleGrid; x++) {
+			text(x * 50, x * tailleCases + 10, 10);
+			line(x * tailleCases, 0, x * tailleCases, tailleGrid * tailleCases);
+		}
+		for (int y = 0; y < tailleGrid; y++) {
+			text(y * 50, 10, y * tailleCases + 10);
+			line(0, y * tailleCases, tailleGrid * tailleCases, y * tailleCases);
+		}
+		pop();
 	}
 }

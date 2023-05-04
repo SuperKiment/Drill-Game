@@ -41,6 +41,7 @@ public class Utils {
 	}
 
 	public static String getClearClass(Object o) {
-		return MinigameDrill.split(o.getClass().toString(), "$")[1];
+		//MinigameDrill.print(o.getClass().toString());
+		return MinigameDrill.split(o.getClass().toString(), ".").length > 1 ? MinigameDrill.split(o.getClass().toString(), ".")[1] : "Entity";
 	}
 }

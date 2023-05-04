@@ -1,7 +1,6 @@
 package Entities;
 
 import Main.MinigameDrill;
-import java.awt.Color;
 
 public class Collectable extends Entity {
 
@@ -37,6 +36,7 @@ public class Collectable extends Entity {
 
 	public void Display() {
 		MinigameDrill.window.push();
+		MinigameDrill.window.rectMode(MinigameDrill.window.CENTER);
 	    switch(type) {
 	      case Pierre:
 	    	  MinigameDrill.window.fill(125);
